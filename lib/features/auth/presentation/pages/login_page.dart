@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+
+import '../../../../app/router/route_names.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_spacing.dart';
+import '../../../../core/services/navigation_service.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_text_field.dart';
+import '../../data/auth_service.dart';
+import '../widgets/auth_brand_block.dart';
+import '../widgets/auth_page_shell.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,59 +18,241 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+  bool _isSubmitting = false;
+  String? _errorMessage;
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
+  void _clearError(String _) {
+    if (_errorMessage != null) {
+      setState(() => _errorMessage = null);
+    }
+  }
+
+  Future<void> _handleLogin() async {
+    FocusScope.of(context).unfocus();
+    if (_errorMessage != null) {
+      setState(() => _errorMessage = null);
+    }
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+    final user = await AuthService.instance.login(
+      name: _nameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+    if (!mounted) {
+      return;
+    }
+
+    if (user == null) {
+      setState(() {
+        _isSubmitting = false;
+        _errorMessage = 'Incorrect name, email or password.';
+      });
+      return;
+    }
+
+    setState(() => _isSubmitting = false);
+    NavigationService.pushReplacementNamed(RouteNames.userHome);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Welcome Back 👋',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    final tight = MediaQuery.sizeOf(context).height < 720;
+    final fieldsGap = tight ? 20.0 : 30.0;
+    final fieldSpacing = tight ? 12.0 : 16.0;
+    final forgotGap = tight ? 8.0 : 10.0;
+    final buttonGap = tight ? 20.0 : 28.0;
+    final footerGap = tight ? 16.0 : AppSpacing.lg;
+
+    return AuthPageShell(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const AuthBrandBlock(),
+            const Text(
+              'Welcome Back!',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+                letterSpacing: -0.5,
               ),
-              const SizedBox(height: 8),
-              const Text(
-                'Sign in to book your salon appointment',
-                style: TextStyle(color: Colors.grey, fontSize: 14),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Login to continue your beauty journey.',
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColors.textSecondary,
+                height: 1.4,
               ),
-              const SizedBox(height: 32),
-              AppTextField(
-                label: 'Email or Phone',
-                hint: 'Enter your email or phone',
-                controller: _emailController,
-                prefixIcon: const Icon(Icons.person_outline),
+            ),
+            SizedBox(height: fieldsGap),
+            AppTextField(
+              controller: _nameController,
+              hint: 'Enter your full name',
+              keyboardType: TextInputType.name,
+              prefixIcon: const Icon(
+                Icons.person_outline_rounded,
+                color: AppColors.primary,
+                size: 22,
               ),
-              const SizedBox(height: 16),
-              AppTextField(
-                label: 'Password',
-                hint: 'Enter your password',
-                controller: _passwordController,
-                obscureText: true,
-                prefixIcon: const Icon(Icons.lock_outline),
+              onChanged: _clearError,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Please enter your name';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: fieldSpacing),
+            AppTextField(
+              controller: _emailController,
+              hint: 'Enter your email address',
+              keyboardType: TextInputType.emailAddress,
+              prefixIcon: const Icon(
+                Icons.mail_outline_rounded,
+                color: AppColors.primary,
+                size: 22,
               ),
-              const SizedBox(height: 24),
-              AppButton(
-                text: 'Sign In',
+              onChanged: _clearError,
+              validator: (value) {
+                final email = value?.trim() ?? '';
+                if (email.isEmpty) {
+                  return 'Please enter your email';
+                }
+                if (!email.contains('@') || !email.contains('.')) {
+                  return 'Please enter a valid email';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: fieldSpacing),
+            AppTextField(
+              controller: _passwordController,
+              hint: 'Enter Password',
+              obscureText: _obscurePassword,
+              prefixIcon: const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.primary,
+                size: 22,
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscurePassword
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  color: AppColors.textSecondary,
+                  size: 22,
+                ),
                 onPressed: () {
-                  // Handled when connecting auth logic
+                  setState(() => _obscurePassword = !_obscurePassword);
                 },
               ),
+              onChanged: _clearError,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                if (value.length < 6) {
+                  return 'Password must be at least 6 characters';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: forgotGap),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  NavigationService.pushNamed(RouteNames.forgotPassword);
+                },
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(0, 0),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: const Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            if (_errorMessage != null) ...[
+              SizedBox(height: tight ? 8 : 10),
+              Text(
+                _errorMessage!,
+                style: const TextStyle(
+                  color: AppColors.error,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ],
-          ),
+            SizedBox(
+              height: _errorMessage == null ? buttonGap : (tight ? 12 : 14),
+            ),
+            AppButton(
+              text: 'Login',
+              isLoading: _isSubmitting,
+              onPressed: _isSubmitting ? null : _handleLogin,
+            ),
+            const Spacer(),
+            SizedBox(height: footerGap),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                const Text(
+                  "Don't have an account? ",
+                  style: TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 14,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    NavigationService.pushNamed(RouteNames.signUp);
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: const Size(0, 0),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

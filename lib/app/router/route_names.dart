@@ -1,10 +1,9 @@
 class RouteNames {
   RouteNames._();
 
-  // Initial & Splash / Onboarding
+  // Initial & Splash
   static const String initial = '/';
   static const String splash = '/splash';
-  static const String onboarding = '/onboarding';
 
   // Auth - Shared & User
   static const String login = '/login';

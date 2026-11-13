@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_spacing.dart';
 
@@ -29,37 +30,42 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveBg = backgroundColor ?? AppColors.primary;
-    final effectiveText = textColor ?? (isOutlined ? effectiveBg : Colors.white);
+    final effectiveText =
+        textColor ?? (isOutlined ? effectiveBg : Colors.white);
 
     if (isOutlined) {
       return SizedBox(
         width: width ?? double.infinity,
-        height: height,
-        child: OutlinedButton(
-          onPressed: isLoading ? null : onPressed,
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(color: effectiveBg),
-            shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: height),
+          child: OutlinedButton(
+            onPressed: isLoading ? null : onPressed,
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: effectiveBg),
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
+            child: _buildChild(effectiveText),
           ),
-          child: _buildChild(effectiveText),
         ),
       );
     }
 
     return SizedBox(
       width: width ?? double.infinity,
-      height: height,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: effectiveBg,
-          foregroundColor: effectiveText,
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: height),
+        child: ElevatedButton(
+          onPressed: isLoading ? null : onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: effectiveBg,
+            foregroundColor: effectiveText,
+            shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+          ),
+          child: _buildChild(effectiveText),
         ),
-        child: _buildChild(effectiveText),
       ),
     );
   }
@@ -82,9 +88,16 @@ class AppButton extends StatelessWidget {
         children: [
           Icon(icon, size: 20, color: color),
           const SizedBox(width: 8),
-          Text(
-            text,
-            style: TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w600),
+          Flexible(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: color,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
       );
