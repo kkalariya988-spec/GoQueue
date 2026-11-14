@@ -95,7 +95,8 @@ void main() {
 
     await tester.tap(find.byKey(const Key('bottom_nav_1')));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Browse every salon'), findsOneWidget);
+    expect(find.text('Start your appointment'), findsOneWidget);
+    expect(find.text('Glow & Glam Salon'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
     await tester.tap(find.byKey(const Key('bottom_nav_4')));

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/theme/app_spacing.dart';
 import '../../data/mock_user_data.dart';
 import '../../data/models/popular_service.dart';
 import 'dashboard_layout.dart';
@@ -94,7 +95,7 @@ class _PopularServicesSection extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final padding = DashboardLayout.pagePadding(width);
+        final padding = AppSpacing.pagePadding(width);
         final textScale = MediaQuery.textScalerOf(context).scale(1);
         final grid = width >= 600 && textScale <= 1.5;
 
@@ -183,7 +184,7 @@ class _TopSalonsSection extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final padding = DashboardLayout.pagePadding(width);
+        final padding = AppSpacing.pagePadding(width);
         final textScale = MediaQuery.textScalerOf(context).scale(1);
         final phone = width < 600;
         final contentWidth = width - padding * 2;

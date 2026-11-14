@@ -7,9 +7,9 @@ import '../../../../app/theme/app_spacing.dart';
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_wordmark.dart';
+import '../../../../features/user/presentation/pages/salons_list_page.dart';
 import '../../../auth/data/auth_service.dart';
 import '../widgets/dashboard_home_view.dart';
-import '../widgets/dashboard_layout.dart';
 
 /// Customer panel shell with a bottom bar on phones and a rail on wider screens.
 class UserHomePage extends StatefulWidget {
@@ -107,14 +107,7 @@ class _UserHomePageState extends State<UserHomePage> {
         },
         onBrowseServices: () => _selectTab(2),
       ),
-      _ComingSoonTab(
-        title: 'Salons',
-        description:
-            'Browse every salon near you, compare ratings and book your '
-            'favourite chair. This screen is next in the build.',
-        icon: Icons.storefront_rounded,
-        onBackHome: () => _selectTab(0),
-      ),
+      const SalonsListPage(),
       _ComingSoonTab(
         title: 'Services',
         description:
@@ -558,7 +551,7 @@ class _ComingSoonTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final padding = DashboardLayout.pagePadding(constraints.maxWidth);
+        final padding = AppSpacing.pagePadding(constraints.maxWidth);
 
         return SafeArea(
           child: SingleChildScrollView(
@@ -658,7 +651,7 @@ class _ProfileTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final padding = DashboardLayout.pagePadding(constraints.maxWidth);
+        final padding = AppSpacing.pagePadding(constraints.maxWidth);
 
         return SafeArea(
           child: SingleChildScrollView(

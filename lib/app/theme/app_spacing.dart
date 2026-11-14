@@ -25,4 +25,12 @@ class AppSpacing {
   static const double lg = 24.0;
   static const double xl = 32.0;
   static const double xxl = 48.0;
+
+  /// Horizontal page inset shared by the dashboard and every panel shell.
+  static double pagePadding(double width) {
+    if (width >= 900) return 40;
+    if (width >= 600) return 32;
+    if (width < 360) return 16;
+    return 20;
+  }
 }

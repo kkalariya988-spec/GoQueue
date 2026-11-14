@@ -4,35 +4,31 @@ import '../../app/theme/app_colors.dart';
 
 /// Section header with a title and an optional action.
 class SectionHeader extends StatelessWidget {
-  const SectionHeader({
-    super.key,
-    required this.title,
-    this.onAction,
-    this.inset = false,
-  });
+  const SectionHeader({super.key, required this.title, this.onAction});
 
   final String title;
   final VoidCallback? onAction;
-  final bool inset;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: inset
-          ? const EdgeInsets.symmetric(horizontal: 16)
-          : const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Semantics(
-            header: true,
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 19,
-                fontWeight: FontWeight.w800,
-                letterSpacing: -0.3,
+          Expanded(
+            child: Semantics(
+              header: true,
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.3,
+                ),
               ),
             ),
           ),
@@ -52,7 +48,10 @@ class SectionHeader extends StatelessWidget {
                       'View All',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   SizedBox(width: 2),

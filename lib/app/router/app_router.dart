@@ -9,6 +9,7 @@ import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/success_page.dart';
 import '../../features/user/presentation/pages/user_home_page.dart';
+import '../../features/user/presentation/pages/salons_list_page.dart';
 
 class AppRouter {
   AppRouter._();
@@ -55,6 +56,10 @@ class AppRouter {
       // Customer Flow
       case RouteNames.userHome:
         return MaterialPageRoute(builder: (_) => const UserHomePage());
+
+      // TEMPORARY: customer Salons list until the real flow is built.
+      case RouteNames.userSalons:
+        return MaterialPageRoute(builder: (_) => const SalonsListPage());
 
       default:
         return MaterialPageRoute(

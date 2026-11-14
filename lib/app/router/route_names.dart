@@ -15,6 +15,7 @@ class RouteNames {
 
   // User / Customer Flow
   static const String userHome = '/user/home';
+  static const String userSalons = '/user/salons';
   static const String userSearch = '/user/search';
   static const String userSalonDetails = '/user/salon';
   static const String userServices = '/user/services';

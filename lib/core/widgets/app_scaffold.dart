@@ -45,7 +45,7 @@ class AppScaffold extends StatelessWidget {
           ),
         if (subtitle != null || children != null)
           const SizedBox(height: AppSpacing.sm),
-        body ?? const SizedBox(),
+        if (body != null) Expanded(child: body!) else const SizedBox(),
         ...?footer,
       ],
     );
@@ -53,11 +53,7 @@ class AppScaffold extends StatelessWidget {
 }
 
 class _BrandHeader extends StatelessWidget {
-  const _BrandHeader({
-    required this.title,
-    this.subtitle,
-    this.titleTextStyle,
-  });
+  const _BrandHeader({required this.title, this.subtitle, this.titleTextStyle});
 
   final String title;
   final String? subtitle;
@@ -65,60 +61,70 @@ class _BrandHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 36,
-          height: 36,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: AppRadius.borderMd,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.22),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpacing.pagePadding(constraints.maxWidth),
           ),
-          child: const Icon(
-            Icons.content_cut_rounded,
-            color: Colors.white,
-            size: 20,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+          child: Row(
             children: [
-              Text(
-                title,
-                style: titleTextStyle ??
-                    TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: -0.4,
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: AppRadius.borderMd,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.22),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
                     ),
-              ),
-              if (subtitle != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Text(
-                    subtitle ?? '',
-                    style: TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 12,
-                      height: 1.3,
-                    ),
-                  ),
+                  ],
                 ),
+                child: const Icon(
+                  Icons.content_cut_rounded,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style:
+                          titleTextStyle ??
+                          TextStyle(
+                            color: AppColors.textPrimary,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.4,
+                          ),
+                    ),
+                    if (subtitle != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(
+                          subtitle ?? '',
+                          style: TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 12,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

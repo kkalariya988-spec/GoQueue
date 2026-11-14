@@ -62,7 +62,7 @@ class _HomeHeroState extends State<HomeHero> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final pagePadding = DashboardLayout.pagePadding(constraints.maxWidth);
+        final pagePadding = AppSpacing.pagePadding(constraints.maxWidth);
         final outerWidth = math.min(
           constraints.maxWidth,
           DashboardLayout.maxContentWidth,
