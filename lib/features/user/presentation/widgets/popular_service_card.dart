@@ -56,7 +56,7 @@ class PopularServiceCard extends StatelessWidget {
                       ),
                     ),
                     child: Icon(
-                      _iconFor(service.name),
+                      serviceIcon(service.name),
                       color: AppColors.primary,
                       size: iconSize,
                     ),
@@ -111,19 +111,22 @@ class PopularServiceCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  IconData _iconFor(String name) {
-    switch (name) {
-      case 'Haircut':
-        return Icons.content_cut_rounded;
-      case 'Hair Styling':
-        return Icons.auto_awesome_rounded;
-      case 'Hair Coloring':
-        return Icons.palette_rounded;
-      case 'Makeup':
-        return Icons.face_retouching_natural_rounded;
-      default:
-        return Icons.spa_rounded;
-    }
+/// Icon for a catalog entry, including the "All" filter chip.
+IconData serviceIcon(String name) {
+  switch (name) {
+    case 'All':
+      return Icons.grid_view_rounded;
+    case 'Haircut':
+      return Icons.content_cut_rounded;
+    case 'Hair Styling':
+      return Icons.auto_awesome_rounded;
+    case 'Hair Coloring':
+      return Icons.palette_rounded;
+    case 'Makeup':
+      return Icons.face_retouching_natural_rounded;
+    default:
+      return Icons.spa_rounded;
   }
 }

@@ -7,6 +7,7 @@ import '../../../../app/theme/app_spacing.dart';
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_wordmark.dart';
+import '../../../../features/user/presentation/pages/services_list_page.dart';
 import '../../../../features/user/presentation/pages/salons_list_page.dart';
 import '../../../auth/data/auth_service.dart';
 import '../widgets/dashboard_home_view.dart';
@@ -108,14 +109,7 @@ class _UserHomePageState extends State<UserHomePage> {
         onBrowseServices: () => _selectTab(2),
       ),
       const SalonsListPage(),
-      _ComingSoonTab(
-        title: 'Services',
-        description:
-            'Explore haircuts, styling, coloring and makeup with live prices '
-            'and durations. This screen is next in the build.',
-        icon: Icons.spa_rounded,
-        onBackHome: () => _selectTab(0),
-      ),
+      const ServicesListPage(),
       _ComingSoonTab(
         title: 'Bookings',
         description:

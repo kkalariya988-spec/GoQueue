@@ -10,21 +10,25 @@ class MockUserData {
       name: 'Haircut',
       tagline: 'Fresh look, new you',
       startingPrice: 299,
+      durationMin: 30,
     ),
     PopularService(
       name: 'Hair Styling',
       tagline: 'For every occasion',
       startingPrice: 499,
+      durationMin: 60,
     ),
     PopularService(
       name: 'Hair Coloring',
       tagline: 'Add a splash of color',
       startingPrice: 999,
+      durationMin: 90,
     ),
     PopularService(
       name: 'Makeup',
       tagline: 'Be your own kind of beautiful',
       startingPrice: 1299,
+      durationMin: 45,
     ),
   ];
 

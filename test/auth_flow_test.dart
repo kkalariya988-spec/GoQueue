@@ -132,4 +132,22 @@ void main() {
     expect(find.byType(LoginPage), findsOneWidget);
     expect(AuthService.instance.currentUser, isNull);
   });
+
+  testWidgets('skip for testing signs in without typing credentials', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const GoQueueApp());
+    await tester.pump(const Duration(milliseconds: 2400));
+    await tester.pumpAndSettle();
+    expect(find.byType(LoginPage), findsOneWidget);
+
+    await tester.tap(find.text('Skip for testing'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(UserHomePage), findsOneWidget);
+    expect(AuthService.instance.currentUser?.email, AuthService.demoEmail);
+    expect(find.text('Hi, Khushi'), findsOneWidget);
+  });
 }
