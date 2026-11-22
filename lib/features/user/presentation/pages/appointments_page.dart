@@ -19,6 +19,9 @@ class AppointmentsPage extends StatefulWidget {
 }
 
 class _AppointmentsPageState extends State<AppointmentsPage> {
+  /// Whether the bookings list is currently refreshing (pull-to-refresh).
+  bool _isRefreshing = false;
+
   @override
   Widget build(BuildContext context) {
     final bookings = MockUserData.activeBookings;
@@ -26,9 +29,13 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
     return AppScaffold(
       title: 'My Bookings & Queue',
       subtitle: 'Manage your visits and live queue tokens',
-      body: bookings.isEmpty
-          ? _emptyBookings()
-          : ListView.separated(
+      body: RefreshIndicator(
+        onRefresh: _refreshBookings,
+        strokeWidth: 3,
+        color: AppColors.primary,
+        child: bookings.isEmpty
+            ? _emptyBookings()
+            : ListView.separated(
                 padding: const EdgeInsets.all(AppSpacing.md),
                 itemCount: bookings.length,
                 separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
@@ -55,7 +62,25 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
                   );
                 },
               ),
+      ),
     );
+  }
+
+  /// Refreshes the bookings list when the user pulls down to refresh.
+  Future<void> _refreshBookings() async {
+    if (_isRefreshing) return;
+    setState(() {
+      _isRefreshing = true;
+    });
+    // Simulate a network request with a brief loading state.
+    await Future.delayed(const Duration(seconds: 1));
+    // In a real app, this would re-fetch the bookings from the server.
+    // The mock data is already in memory, so no extra work is needed.
+    if (mounted) {
+      setState(() {
+        _isRefreshing = false;
+      });
+    }
   }
 
   /// Renders the "no active bookings" placeholder, mirroring the card

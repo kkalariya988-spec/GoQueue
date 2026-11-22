@@ -3,10 +3,15 @@
 /// Only the demo account below can sign in. Replace this service with the
 /// real repository once authentication is connected to the API.
 class AuthUser {
-  const AuthUser({required this.name, required this.email});
+  const AuthUser({
+    required this.name,
+    required this.email,
+    this.role = 'customer',
+  });
 
   final String name;
   final String email;
+  final String role;
 }
 
 class AuthService {

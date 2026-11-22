@@ -5,11 +5,11 @@ import '../../../../app/router/route_names.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../../../core/services/navigation_service.dart';
-import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_wordmark.dart';
 import '../../../../features/user/presentation/pages/services_list_page.dart';
 import '../../../../features/user/presentation/pages/salons_list_page.dart';
 import '../../../../features/user/presentation/pages/appointments_page.dart';
+import '../../../../features/user/presentation/pages/user_profile_page.dart';
 import '../../../auth/data/auth_service.dart';
 import '../widgets/dashboard_home_view.dart';
 
@@ -108,18 +108,17 @@ class _UserHomePageState extends State<UserHomePage> {
           _showMessage('Pick a salon to start your appointment.');
         },
         onBrowseServices: () => _selectTab(2),
+        onLiveQueue: () => Navigator.pushNamed(
+          context,
+          RouteNames.userLiveQueueTicket,
+        ),
       ),
       const SalonsListPage(),
       const ServicesListPage(),
       AppointmentsPage(
         onExploreSalons: () => _selectTab(1),
       ),
-      _ProfileTab(
-        name: user?.name ?? 'Guest',
-        email: user?.email ?? 'Not signed in',
-        initial: initial,
-        onLogout: _handleLogout,
-      ),
+      const UserProfilePage(),
     ];
 
     final body = IndexedStack(index: _selectedIndex, children: pages);
@@ -520,169 +519,6 @@ class _RailLogout extends StatelessWidget {
                 ),
         ),
       ),
-    );
-  }
-}
-
-class _ProfileTab extends StatelessWidget {
-  const _ProfileTab({
-    required this.name,
-    required this.email,
-    required this.initial,
-    required this.onLogout,
-  });
-
-  final String name;
-  final String email;
-  final String initial;
-  final VoidCallback onLogout;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final padding = AppSpacing.pagePadding(constraints.maxWidth);
-
-        return SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: padding, vertical: 20),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 560),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _TabBrandHeader(),
-                    const SizedBox(height: 28),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: AppRadius.borderXl,
-                        border: Border.all(color: AppColors.border),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.05),
-                            blurRadius: 24,
-                            offset: const Offset(0, 12),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 42,
-                            backgroundColor: AppColors.primary,
-                            child: Text(
-                              initial,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 32,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            name,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: AppColors.textPrimary,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            email,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
-                              fontSize: 13.5,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.softPink,
-                              borderRadius: AppRadius.borderPill,
-                            ),
-                            child: const Text(
-                              'Customer',
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 22),
-                          const Divider(color: AppColors.divider, height: 1),
-                          const SizedBox(height: 18),
-                          const Text(
-                            'Full profile settings, saved addresses and '
-                            'preferences are coming next.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.textSecondary,
-                              fontSize: 13,
-                              height: 1.5,
-                            ),
-                          ),
-                          const SizedBox(height: 22),
-                          AppButton(
-                            text: 'Log Out',
-                            icon: Icons.logout_rounded,
-                            isOutlined: true,
-                            onPressed: onLogout,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _TabBrandHeader extends StatelessWidget {
-  const _TabBrandHeader();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Icon(
-            Icons.content_cut_rounded,
-            color: Colors.white,
-            size: 18,
-          ),
-        ),
-        const SizedBox(width: 8),
-        const Flexible(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: AppWordmark(fontSize: 22),
-          ),
-        ),
-      ],
     );
   }
 }

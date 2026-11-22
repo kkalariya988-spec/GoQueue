@@ -28,6 +28,7 @@ class RouteNames {
   static const String userProfile = '/user/profile';
   static const String userOffers = '/user/offers';
   static const String userMenu = '/user/menu';
+  static const String userLiveQueueTicket = '/user/live-queue-ticket';
 
   // Manager Flow
   static const String managerLogin = '/manager/login';

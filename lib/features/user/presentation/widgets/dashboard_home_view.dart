@@ -25,6 +25,7 @@ class DashboardHomeView extends StatelessWidget {
     required this.onBrowseSalons,
     required this.onBookAppointment,
     required this.onBrowseServices,
+    required this.onLiveQueue,
   });
 
   final String firstName;
@@ -35,6 +36,7 @@ class DashboardHomeView extends StatelessWidget {
   final VoidCallback onBrowseSalons;
   final VoidCallback onBookAppointment;
   final VoidCallback onBrowseServices;
+  final VoidCallback onLiveQueue;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +81,9 @@ class DashboardHomeView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 36),
+                  const SizedBox(height: 12),
+                  _LiveQueueButton(onLiveQueue: onLiveQueue),
+                  const SizedBox(height: 28),
                 ],
               ),
             ),
@@ -352,6 +357,67 @@ class _SectionHeader extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Live Queue button for accessing the live queue ticket screen.
+class _LiveQueueButton extends StatelessWidget {
+  const _LiveQueueButton({required this.onLiveQueue});
+
+  final VoidCallback onLiveQueue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+      child: Material(
+        color: AppColors.primary,
+        borderRadius: AppRadius.borderMd,
+        child: InkWell(
+          onTap: onLiveQueue,
+          borderRadius: AppRadius.borderMd,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 34,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    Icons.fast_forward_rounded,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    '⚡ Join Live Queue',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Colors.white,
+                  size: 18,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
