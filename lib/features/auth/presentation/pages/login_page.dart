@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/router/route_names.dart';
@@ -220,31 +219,6 @@ class _LoginPageState extends State<LoginPage> {
               isLoading: _isSubmitting,
               onPressed: _isSubmitting ? null : _handleLogin,
             ),
-            // shortcut: debug builds only, drop when the real auth backend lands
-            if (!kReleaseMode)
-              TextButton(
-                onPressed: _isSubmitting
-                    ? null
-                    : () {
-                        _nameController.text = AuthService.demoName;
-                        _emailController.text = AuthService.demoEmail;
-                        _passwordController.text = AuthService.demoPassword;
-                        _handleLogin();
-                      },
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  minimumSize: const Size(0, 0),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: const Text(
-                  'Skip for testing',
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
             const Spacer(),
             SizedBox(height: footerGap),
             Wrap(

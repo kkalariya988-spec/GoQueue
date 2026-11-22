@@ -2,8 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../../../app/router/route_names.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_spacing.dart';
+import '../../../../core/services/navigation_service.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_wordmark.dart';
 import 'dashboard_layout.dart';
@@ -268,7 +270,7 @@ class _HomeHeroState extends State<HomeHero> {
           hint: 'Search salon or service',
           icon: Icons.search_rounded,
           textInputAction: TextInputAction.next,
-          onSubmitted: (_) => _locationFocus.requestFocus(),
+          onTap: () => NavigationService.pushNamed(RouteNames.userSearch),
         ),
         const SizedBox(height: 8),
         _HeroSearchField(
@@ -476,7 +478,8 @@ class _HeroSearchField extends StatelessWidget {
     required this.hint,
     required this.icon,
     required this.textInputAction,
-    required this.onSubmitted,
+    this.onTap,
+    this.onSubmitted,
   });
 
   final TextEditingController controller;
@@ -484,7 +487,8 @@ class _HeroSearchField extends StatelessWidget {
   final String hint;
   final IconData icon;
   final TextInputAction textInputAction;
-  final ValueChanged<String> onSubmitted;
+  final VoidCallback? onTap;
+  final ValueChanged<String>? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -496,6 +500,8 @@ class _HeroSearchField extends StatelessWidget {
     return TextField(
       controller: controller,
       focusNode: focusNode,
+      readOnly: onTap != null,
+      onTap: onTap,
       textInputAction: textInputAction,
       onSubmitted: onSubmitted,
       autocorrect: false,

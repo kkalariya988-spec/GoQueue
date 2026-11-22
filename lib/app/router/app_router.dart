@@ -10,6 +10,7 @@ import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/success_page.dart';
 import '../../features/user/presentation/pages/user_home_page.dart';
 import '../../features/user/presentation/pages/salons_list_page.dart';
+import '../../features/user/presentation/pages/search_page.dart';
 
 class AppRouter {
   AppRouter._();
@@ -60,6 +61,9 @@ class AppRouter {
       // TEMPORARY: customer Salons list until the real flow is built.
       case RouteNames.userSalons:
         return MaterialPageRoute(builder: (_) => const SalonsListPage());
+
+      case RouteNames.userSearch:
+        return MaterialPageRoute(builder: (_) => const SearchPage());
 
       default:
         return MaterialPageRoute(

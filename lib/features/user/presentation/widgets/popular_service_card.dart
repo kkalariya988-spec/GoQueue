@@ -126,6 +126,14 @@ IconData serviceIcon(String name) {
       return Icons.palette_rounded;
     case 'Makeup':
       return Icons.face_retouching_natural_rounded;
+    case 'Hair Spa':
+      return Icons.spa_rounded;
+    case 'Facial':
+      return Icons.face_rounded;
+    case 'Nails':
+      return Icons.brush_rounded;
+    case 'Manicure':
+      return Icons.water_drop_rounded;
     default:
       return Icons.spa_rounded;
   }

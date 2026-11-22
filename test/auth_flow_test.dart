@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:goqueue/app/app.dart';
+import 'package:goqueue/app/router/app_router.dart';
+import 'package:goqueue/core/services/navigation_service.dart';
 import 'package:goqueue/core/widgets/app_button.dart';
 import 'package:goqueue/features/auth/data/auth_service.dart';
 import 'package:goqueue/features/auth/presentation/pages/login_page.dart';
@@ -9,15 +10,24 @@ import 'package:goqueue/features/auth/presentation/pages/signup_page.dart';
 import 'package:goqueue/features/auth/presentation/pages/success_page.dart';
 import 'package:goqueue/features/user/presentation/pages/user_home_page.dart';
 
+Future<void> _pumpLogin(WidgetTester tester) async {
+  await tester.pumpWidget(
+    MaterialApp(
+      navigatorKey: NavigationService.navigatorKey,
+      onGenerateRoute: AppRouter.generateRoute,
+      home: const LoginPage(),
+    ),
+  );
+  await tester.pumpAndSettle();
+}
+
 void main() {
   setUp(() => AuthService.instance.logout());
 
   testWidgets('Create account -> OTP -> success -> back to login', (
     tester,
   ) async {
-    await tester.pumpWidget(const GoQueueApp());
-    await tester.pump(const Duration(milliseconds: 2400));
-    await tester.pumpAndSettle();
+    await _pumpLogin(tester);
 
     // Login → Sign Up.
     await tester.tap(find.text('Sign Up'));
@@ -75,9 +85,7 @@ void main() {
   testWidgets('demo credentials sign in and invalid credentials are rejected', (
     tester,
   ) async {
-    await tester.pumpWidget(const GoQueueApp());
-    await tester.pump(const Duration(milliseconds: 2400));
-    await tester.pumpAndSettle();
+    await _pumpLogin(tester);
     expect(find.byType(LoginPage), findsOneWidget);
 
     final fields = find.byType(TextFormField);
@@ -131,23 +139,5 @@ void main() {
 
     expect(find.byType(LoginPage), findsOneWidget);
     expect(AuthService.instance.currentUser, isNull);
-  });
-
-  testWidgets('skip for testing signs in without typing credentials', (
-    tester,
-  ) async {
-    await tester.pumpWidget(const GoQueueApp());
-    await tester.pump(const Duration(milliseconds: 2400));
-    await tester.pumpAndSettle();
-    expect(find.byType(LoginPage), findsOneWidget);
-
-    await tester.tap(find.text('Skip for testing'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(UserHomePage), findsOneWidget);
-    expect(AuthService.instance.currentUser?.email, AuthService.demoEmail);
-    expect(find.text('Hi, Khushi'), findsOneWidget);
   });
 }
