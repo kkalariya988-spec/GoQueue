@@ -2,10 +2,12 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../../../app/router/route_names.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../data/mock_user_data.dart';
 import '../../data/models/popular_service.dart';
+import '../../data/models/salon.dart';
 import 'dashboard_layout.dart';
 import 'home_hero.dart';
 import 'popular_service_card.dart';
@@ -68,7 +70,13 @@ class DashboardHomeView extends StatelessWidget {
                   const SizedBox(height: 28),
                   _TopSalonsSection(
                     onViewAll: onBrowseSalons,
-                    onSalonTap: onBrowseSalons,
+                    onSalonTap: (salon) {
+                      Navigator.pushNamed(
+                        context,
+                        RouteNames.userSalonDetails,
+                        arguments: salon,
+                      );
+                    },
                   ),
                   const SizedBox(height: 36),
                 ],
@@ -177,7 +185,7 @@ class _TopSalonsSection extends StatelessWidget {
   const _TopSalonsSection({required this.onViewAll, required this.onSalonTap});
 
   final VoidCallback onViewAll;
-  final VoidCallback onSalonTap;
+  final ValueChanged<Salon> onSalonTap;
 
   @override
   Widget build(BuildContext context) {
@@ -278,15 +286,16 @@ class _SalonCardAt extends StatelessWidget {
   const _SalonCardAt({required this.index, required this.onTap});
 
   final int index;
-  final VoidCallback onTap;
+  final ValueChanged<Salon> onTap;
 
   @override
   Widget build(BuildContext context) {
+    final salon = MockUserData.topSalons[index];
     return SalonCard(
-      salon: MockUserData.topSalons[index],
+      salon: salon,
       paletteIndex: index,
-      onView: onTap,
-      onBook: onTap,
+      onView: () => onTap(salon),
+      onBook: () => onTap(salon),
     );
   }
 }

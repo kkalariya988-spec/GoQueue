@@ -46,3 +46,25 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+.agents/skills/security-audit/AI-AND-LLM.md
+.agents/skills/security-audit/ATTACK-CLASSES.md
+.agents/skills/security-audit/CLIENT-SIDE.md
+.agents/skills/security-audit/CLOUD-AND-DEPLOYMENT.md
+.agents/skills/security-audit/DATA-ISOLATION-AND-LIFECYCLE.md
+.agents/skills/security-audit/DESKTOP-MOBILE-AND-LOCAL-IPC.md
+.agents/skills/security-audit/HUNTING.md
+.agents/skills/security-audit/MEMORY-SAFETY-AND-BINARY.md
+.agents/skills/security-audit/PROTOCOLS-RPC-AND-MESSAGING.md
+.agents/skills/security-audit/RECONNAISSANCE.md
+.agents/skills/security-audit/report-schema.json
+.agents/skills/security-audit/RESOURCE-EXHAUSTION-AND-AVAILABILITY.md
+.agents/skills/security-audit/SKILL.md
+.agents/skills/security-audit/SUPPLY-CHAIN-AND-RELEASE.md
+.agents/skills/security-audit/validate-coverage-ledger.cjs
+.agents/skills/security-audit/validate-coverage-ledger.test.cjs
+.agents/skills/security-audit/validate-findings.cjs
+.agents/skills/security-audit/validate-findings.test.cjs
+.agents/skills/security-audit/VALIDATION-AND-REPORTING.md
+.agents/skills/security-audit/WEB-PROTOCOL-AND-AUTH.md
+skills-lock.json
+.agents/skills/untangle-codebase/SKILL.md

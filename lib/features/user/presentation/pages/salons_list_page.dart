@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
+import '../../../../app/router/route_names.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/section_header.dart';
@@ -18,24 +18,18 @@ class SalonsListPage extends StatelessWidget {
   const SalonsListPage({super.key});
 
   static void navigateToSalon(BuildContext context, Salon salon) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Salon detail coming next.'),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: AppColors.textPrimary,
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
-      ),
+    Navigator.pushNamed(
+      context,
+      RouteNames.userSalonDetails,
+      arguments: salon,
     );
   }
 
   static void _bookAppointment(BuildContext context, Salon salon) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Pick a salon to start your appointment.'),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: AppColors.textPrimary,
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
-      ),
+    Navigator.pushNamed(
+      context,
+      RouteNames.userSalonDetails,
+      arguments: salon,
     );
   }
 

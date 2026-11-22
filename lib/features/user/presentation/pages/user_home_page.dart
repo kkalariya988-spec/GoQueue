@@ -9,6 +9,7 @@ import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_wordmark.dart';
 import '../../../../features/user/presentation/pages/services_list_page.dart';
 import '../../../../features/user/presentation/pages/salons_list_page.dart';
+import '../../../../features/user/presentation/pages/appointments_page.dart';
 import '../../../auth/data/auth_service.dart';
 import '../widgets/dashboard_home_view.dart';
 
@@ -110,14 +111,7 @@ class _UserHomePageState extends State<UserHomePage> {
       ),
       const SalonsListPage(),
       const ServicesListPage(),
-      _ComingSoonTab(
-        title: 'Bookings',
-        description:
-            'Your upcoming, completed and cancelled appointments will live '
-            'here. This screen is next in the build.',
-        icon: Icons.calendar_month_rounded,
-        onBackHome: () => _selectTab(0),
-      ),
+      const AppointmentsPage(),
       _ProfileTab(
         name: user?.name ?? 'Guest',
         email: user?.email ?? 'Not signed in',
@@ -524,106 +518,6 @@ class _RailLogout extends StatelessWidget {
                 ),
         ),
       ),
-    );
-  }
-}
-
-class _ComingSoonTab extends StatelessWidget {
-  const _ComingSoonTab({
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.onBackHome,
-  });
-
-  final String title;
-  final String description;
-  final IconData icon;
-  final VoidCallback onBackHome;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final padding = AppSpacing.pagePadding(constraints.maxWidth);
-
-        return SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: padding, vertical: 20),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 620),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const _TabBrandHeader(),
-                    const SizedBox(height: 36),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: AppRadius.borderXl,
-                        border: Border.all(color: AppColors.border),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.05),
-                            blurRadius: 24,
-                            offset: const Offset(0, 12),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 76,
-                            height: 76,
-                            decoration: BoxDecoration(
-                              color: AppColors.softPink,
-                              shape: BoxShape.circle,
-                              border: Border.all(color: AppColors.iconPink),
-                            ),
-                            child: Icon(
-                              icon,
-                              color: AppColors.primary,
-                              size: 34,
-                            ),
-                          ),
-                          const SizedBox(height: 18),
-                          Text(
-                            title,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: AppColors.textPrimary,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: -0.4,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            description,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
-                              fontSize: 14,
-                              height: 1.5,
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          AppButton(
-                            text: 'Back to Home',
-                            onPressed: onBackHome,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

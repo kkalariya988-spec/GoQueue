@@ -10,7 +10,11 @@ import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/success_page.dart';
 import '../../features/user/presentation/pages/user_home_page.dart';
 import '../../features/user/presentation/pages/salons_list_page.dart';
+import '../../features/user/presentation/pages/salon_detail_page.dart';
+import '../../features/user/presentation/pages/appointments_page.dart';
 import '../../features/user/presentation/pages/search_page.dart';
+import '../../features/user/data/models/salon.dart';
+import '../../features/user/data/mock_user_data.dart';
 
 class AppRouter {
   AppRouter._();
@@ -58,9 +62,19 @@ class AppRouter {
       case RouteNames.userHome:
         return MaterialPageRoute(builder: (_) => const UserHomePage());
 
-      // TEMPORARY: customer Salons list until the real flow is built.
       case RouteNames.userSalons:
         return MaterialPageRoute(builder: (_) => const SalonsListPage());
+
+      case RouteNames.userSalonDetails:
+        final salon = settings.arguments is Salon
+            ? settings.arguments as Salon
+            : MockUserData.topSalons.first;
+        return MaterialPageRoute(
+          builder: (_) => SalonDetailPage(salon: salon),
+        );
+
+      case RouteNames.userAppointments:
+        return MaterialPageRoute(builder: (_) => const AppointmentsPage());
 
       case RouteNames.userSearch:
         return MaterialPageRoute(builder: (_) => const SearchPage());
