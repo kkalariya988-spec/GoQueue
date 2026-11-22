@@ -39,12 +39,9 @@ class _ServicesListPageState extends State<ServicesListPage> {
               .where((service) => service.name == _selected)
               .toList();
 
-    return SafeArea(
-      top: true,
-      bottom: false,
-      child: AppScaffold(
-        title: 'Services',
-        subtitle: 'Beauty & Care Services',
+    return AppScaffold(
+      title: 'Services',
+      subtitle: 'Beauty & Care Services',
         body: LayoutBuilder(
           builder: (context, constraints) {
             final padding = AppSpacing.pagePadding(constraints.maxWidth);
@@ -68,7 +65,6 @@ class _ServicesListPageState extends State<ServicesListPage> {
             );
           },
         ),
-      ),
     );
   }
 }

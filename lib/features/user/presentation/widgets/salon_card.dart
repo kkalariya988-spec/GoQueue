@@ -277,42 +277,19 @@ class _SalonActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final scaledLabel = MediaQuery.textScalerOf(context).scale(12);
-        final stack = constraints.maxWidth < 210 || scaledLabel > 16;
-
-        if (stack) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _SalonButton(label: 'View salon', onPressed: onView),
-              const SizedBox(height: 8),
-              _SalonButton(label: 'Book Now', onPressed: onBook, filled: true),
-            ],
-          );
-        }
-
-        return IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: _SalonButton(label: 'View salon', onPressed: onView),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _SalonButton(
-                  label: 'Book Now',
-                  onPressed: onBook,
-                  filled: true,
-                ),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: _SalonButton(label: 'View salon', onPressed: onView),
           ),
-        );
-      },
+          Expanded(
+            child: _SalonButton(label: 'Book Now', onPressed: onBook, filled: true),
+          ),
+        ],
+      ),
     );
   }
 }

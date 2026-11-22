@@ -27,27 +27,32 @@ class AppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _BrandHeader(
-          title: title,
-          subtitle: subtitle,
-          titleTextStyle: titleTextStyle,
-        ),
-        if (children != null && children!.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: children!,
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _BrandHeader(
+              title: title,
+              subtitle: subtitle,
+              titleTextStyle: titleTextStyle,
             ),
-          ),
-        if (subtitle != null || children != null)
-          const SizedBox(height: AppSpacing.sm),
-        if (body != null) Expanded(child: body!) else const SizedBox(),
-        ...?footer,
-      ],
+            if (children != null && children!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: children!,
+                ),
+              ),
+            if (subtitle != null || children != null)
+              const SizedBox(height: AppSpacing.sm),
+            if (body != null) Expanded(child: body!) else const SizedBox(),
+            ...?footer,
+          ],
+        ),
+      ),
     );
   }
 }
@@ -61,6 +66,7 @@ class _BrandHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final canPop = Navigator.canPop(context);
     return LayoutBuilder(
       builder: (context, constraints) {
         return Padding(
@@ -69,6 +75,17 @@ class _BrandHeader extends StatelessWidget {
           ),
           child: Row(
             children: [
+              if (canPop) ...[
+                IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  color: AppColors.textPrimary,
+                  onPressed: () => Navigator.pop(context),
+                  tooltip: 'Back',
+                  constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                  padding: EdgeInsets.zero,
+                ),
+                const SizedBox(width: 4),
+              ],
               Container(
                 width: 36,
                 height: 36,

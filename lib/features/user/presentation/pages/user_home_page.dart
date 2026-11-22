@@ -111,7 +111,9 @@ class _UserHomePageState extends State<UserHomePage> {
       ),
       const SalonsListPage(),
       const ServicesListPage(),
-      const AppointmentsPage(),
+      AppointmentsPage(
+        onExploreSalons: () => _selectTab(1),
+      ),
       _ProfileTab(
         name: user?.name ?? 'Guest',
         email: user?.email ?? 'Not signed in',

@@ -35,14 +35,10 @@ class SalonsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: true,
-      bottom: false,
-      child: AppScaffold(
-        title: 'Salons',
-        subtitle: 'Start your appointment',
-        body: _SalonsListBody(),
-      ),
+    return AppScaffold(
+      title: 'Salons',
+      subtitle: 'Start your appointment',
+      body: _SalonsListBody(),
     );
   }
 }

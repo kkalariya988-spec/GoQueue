@@ -10,7 +10,9 @@ import '../../data/mock_user_data.dart';
 
 /// Appointments & Active Queue tracking screen for customers.
 class AppointmentsPage extends StatefulWidget {
-  const AppointmentsPage({super.key});
+  const AppointmentsPage({super.key, this.onExploreSalons});
+
+  final VoidCallback? onExploreSalons;
 
   @override
   State<AppointmentsPage> createState() => _AppointmentsPageState();
@@ -21,15 +23,12 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   Widget build(BuildContext context) {
     final bookings = MockUserData.activeBookings;
 
-    return SafeArea(
-      top: true,
-      bottom: true,
-      child: AppScaffold(
-        title: 'My Bookings & Queue',
-        subtitle: 'Manage your visits and live queue tokens',
-        body: bookings.isEmpty
-            ? _emptyBookings()
-            : ListView.separated(
+    return AppScaffold(
+      title: 'My Bookings & Queue',
+      subtitle: 'Manage your visits and live queue tokens',
+      body: bookings.isEmpty
+          ? _emptyBookings()
+          : ListView.separated(
                 padding: const EdgeInsets.all(AppSpacing.md),
                 itemCount: bookings.length,
                 separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
@@ -56,7 +55,6 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
                   );
                 },
               ),
-      ),
     );
   }
 
@@ -95,7 +93,13 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
             AppButton(
               text: 'Explore Salons',
               onPressed: () {
-                Navigator.pushNamed(context, RouteNames.userSalons);
+                if (widget.onExploreSalons != null) {
+                  widget.onExploreSalons!();
+                } else if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                } else {
+                  Navigator.pushNamed(context, RouteNames.userSalons);
+                }
               },
               width: 200,
             ),

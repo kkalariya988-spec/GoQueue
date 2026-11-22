@@ -8,3 +8,280 @@ WARNING: Restricted methods will be blocked in a future release unless native ac
 Running Gradle task 'assembleDebug'...                              5.2s
 √ Built build\app\outputs\flutter-apk\app-debug.apk
 Installing build\app\outputs\flutter-apk\app-debug.apk...          11.2s
+I/FlutterActivityAndFragmentDelegate(17897): If you are attempting to set --enable-dart-profiling via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --enable-dart-profiling or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+D/FlutterJNI(17897): Beginning load of flutter...
+D/FlutterJNI(17897): flutter (null) was loaded normally!
+I/flutter (17897): [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+D/FlutterRenderer(17897): Width is zero. 0,0
+D/FlutterRenderer(17897): Width is zero. 0,0
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+Syncing files to device I2302 (wireless)...                     
+I/example.goqueue(17897): AssetManager2(0xb400007301503138) locale list changing from [] to [en-US]
+I/example.goqueue(17897): AssetManager2(0xb400007301504a38) locale list changing from [] to [en-US]
+I/example.goqueue(17897): AssetManager2(0xb4000073014fff38) locale list changing from [] to [en-US]
+I/example.goqueue(17897): AssetManager2(0xb4000073015075f8) locale list changing from [] to [en-US]
+I/example.goqueue(17897): AssetManager2(0xb400007301504d58) locale list changing from [] to [en-US]
+D/ProfileInstaller(17897): Installing profile for com.example.goqueue
+Syncing files to device I2302 (wireless)...                        911ms
+
+Flutter run key commands.
+r Hot reload. 
+R Hot restart.
+h List all available interactive commands.
+d Detach (terminate "flutter run" but leave application running).
+c Clear the screen
+q Quit (terminate the application on the device).
+
+A Dart VM Service on I2302 is available at: http://127.0.0.1:49731/NmV6eZwvvSs=/
+I/HWUI    (17897): [setStopped] CanvasContext will be destroyed.
+D/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#1](f:0,a:4) destructor()
+D/BufferQueueConsumer(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#1(BLAST Consumer)1](id:45e900000001,api:0,p:-1,c:17897) disconnect
+D/BLASTBufferQueue(17897): [VRI[MainActivity,type=1]#0](f:0,a:1) destructor()
+D/BufferQueueConsumer(17897): [VRI[MainActivity,type=1]#0(BLAST Consumer)0](id:45e900000000,api:0,p:-1,c:17897) disconnect
+I/HWUI    (17897): [destroy] CanvasContext will be destroyed.
+D/ViewRootImpl(17897): AppSizeAfterRelayout, size: Point(1080, 2400), rotation: ROTATION_0
+D/ViewRootImpl(17897): AppSizeAfterRelayout, size: Point(1080, 2400), rotation: ROTATION_0
+D/BufferQueueConsumer(17897): [](id:45e900000002,api:0,p:-1,c:17897) connect: controlledByApp=false
+D/BLASTBufferQueue(17897): [VRI[MainActivity,type=1]#2](f:0,a:0) constructor()
+D/BLASTBufferQueue(17897): [VRI[MainActivity,type=1]#2](f:0,a:0) update width=1080 height=2400 format=-3 mTransformHint=0
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/BufferQueueConsumer(17897): [](id:45e900000003,api:0,p:-1,c:17897) connect: controlledByApp=false
+D/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:0,a:0) constructor()
+D/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:0,a:0) update width=1080 height=2400 format=4 mTransformHint=0
+E/mali_gralloc(17897): ERROR: Format allocation info not found for format: 38
+E/mali_gralloc(17897): ERROR: Format allocation info not found for format: 0
+E/example.goqueue(17897): Invalid base format! req_base_format = 0x0, req_format = 0x38
+E/mali_gralloc(17897): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+E/mali_gralloc(17897): ERROR: Format allocation info not found for format: 3b
+E/mali_gralloc(17897): ERROR: Format allocation info not found for format: 0
+E/example.goqueue(17897): Invalid base format! req_base_format = 0x0, req_format = 0x3b
+E/mali_gralloc(17897): ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
+E/mali_gralloc(17897): ERROR: Format allocation info not found for format: 38
+E/mali_gralloc(17897): ERROR: Format allocation info not found for format: 0
+E/example.goqueue(17897): Invalid base format! req_base_format = 0x0, req_format = 0x38
+E/mali_gralloc(17897): ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+E/mali_gralloc(17897): ERROR: Format allocation info not found for format: 3b
+E/mali_gralloc(17897): ERROR: Format allocation info not found for format: 0
+E/example.goqueue(17897): Invalid base format! req_base_format = 0x0, req_format = 0x3b
+E/mali_gralloc(17897): ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
+D/BLASTBufferQueue(17897): [VRI[MainActivity,type=1]#2](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=1200577924712713(auto) mPendingTransactions.size=0 graphicBufferId=76867029696549 transform=0
+D/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=1200577956719251(auto) mPendingTransactions.size=0 graphicBufferId=76867029696541 transform=0
+V/ImeFocusController(17897): onWindowFocus: com.android.internal.policy.DecorView{91ab056 V.E...... R....... 0,0-1080,2400 aid=0}[MainActivity] softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+I/ImeTracker(17897): com.example.goqueue:5c5099d0: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+W/libc    (17897): Access denied finding property "ro.vendor.vivo.software.ai.llm.disable"
+W/event-thread(17897): type=1400 audit(0.0:6136625): avc:  denied  { read } for  name="u:object_r:vendor_feature_prop:s0" dev="tmpfs" ino=563 scontext=u:r:untrusted_app:s0:c110,c257,c512,c768 tcontext=u:object_r:vendor_feature_prop:s0 tclass=file permissive=0 app=com.example.goqueue
+D/InsetsAnimationCtrlImpl(17897): notify control request finished for types: 1
+I/ANDR-VIVO-PERF(17897): vivo inside perf_lock_rel of client
+W/InteractionJankMonitor(17897): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.example.goqueue
+I/ImeTracker(17897): com.example.goqueue:d05c9d74: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InsetsController(17897): Setting requestedVisibleTypes to -5121 (was -5129)
+I/ImeTracker(17897): com.example.goqueue:a031192: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+I/ImeTracker(17897): com.example.goqueue:a031192: onCancelled at PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring on
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/InsetsAnimationCtrlImpl(17897): notify control request finished for types: 8
+I/ANDR-VIVO-PERF(17897): vivo inside perf_lock_rel of client
+I/ImeTracker(17897): com.example.goqueue:d05c9d74: onShown
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+I/ImeTracker(17897): com.example.goqueue:429e32c5: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+I/ImeTracker(17897): com.example.goqueue:429e32c5: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring on
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring off
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring on
+I/ImeTracker(17897): com.example.goqueue:e3b75896: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+I/ImeTracker(17897): com.example.goqueue:e3b75896: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring on
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring off
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring on
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+I/ImeTracker(17897): com.example.goqueue:567070dc: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+I/ImeTracker(17897): com.example.goqueue:567070dc: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring on
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring off
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring on
+I/ImeTracker(17897): com.example.goqueue:1bb0728d: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+W/WindowOnBackDispatcher(17897): sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@e931668
+D/InsetsController(17897): Setting requestedVisibleTypes to -5129 (was -5121)
+D/CompatChangeReporter(17897): Compat change id reported: 395521150; UID 10366; state: ENABLED
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring off
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+I/ImeTracker(17897): system_server:67620a92: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/InsetsAnimationCtrlImpl(17897): notify control request finished for types: 8
+I/ANDR-VIVO-PERF(17897): vivo inside perf_lock_rel of client
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+I/ImeTracker(17897): com.example.goqueue:aaffd57d: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InsetsController(17897): Setting requestedVisibleTypes to -5121 (was -5129)
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring on
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/InsetsAnimationCtrlImpl(17897): notify control request finished for types: 8
+I/ANDR-VIVO-PERF(17897): vivo inside perf_lock_rel of client
+I/ImeTracker(17897): com.example.goqueue:aaffd57d: onShown
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+I/ImeTracker(17897): com.example.goqueue:f2708834: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+W/WindowOnBackDispatcher(17897): sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@e931668
+D/InsetsController(17897): Setting requestedVisibleTypes to -5129 (was -5121)
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/InputConnectionAdaptor(17897): The input method toggled cursor monitoring off
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+I/ImeTracker(17897): system_server:549e0f4e: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/InsetsAnimationCtrlImpl(17897): notify control request finished for types: 8
+I/ANDR-VIVO-PERF(17897): vivo inside perf_lock_rel of client
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+I/example.goqueue(17897): AssetManager2(0xb400007301532578) locale list changing from [] to [en-US]
+I/example.goqueue(17897): AssetManager2(0xb40000730154af38) locale list changing from [] to [en-US]
+I/example.goqueue(17897): AssetManager2(0xb40000730154b258) locale list changing from [] to [en-US]
+I/example.goqueue(17897): AssetManager2(0xb400007301549c78) locale list changing from [] to [en-US]
+I/example.goqueue(17897): AssetManager2(0xb40000730154d4b8) locale list changing from [] to [en-US]
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+W/WindowOnBackDispatcher(17897): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher(17897): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+E/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:1,a:7) acquireNextBufferLocked: Can't acquire next buffer. Already acquired max frames 7 max:5 + 2
+W/WindowOnBackDispatcher(17897): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher(17897): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+I/example.goqueue(17897): AssetManager2(0xb4000073015700f8) locale list changing from [] to [en-US]
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+D/FlutterJNI(17897): Sending viewport metrics to the engine.
+V/ImeFocusController(17897): onWindowFocus: io.flutter.embedding.android.FlutterView{8499b49 VFE...... .F...... 0,0-1080,2400 #1 aid=1073741824} softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+I/ImeTracker(17897): com.example.goqueue:1f33eb18: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/VRI[MainActivity,type=1](17897): visibilityChanged oldVisibility=true newVisibility=false
+D/BLASTBufferQueue(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3](f:0,a:4) destructor()
+D/BufferQueueConsumer(17897): [9e6d0ea SurfaceView[com.example.goqueue/com.example.goqueue.MainActivity]#3(BLAST Consumer)3](id:45e900000003,api:0,p:-1,c:17897) disconnect
+I/HWUI    (17897): [destroy] CanvasContext will be destroyed.
+D/ViewRootImpl(17897): AppSizeAfterRelayout, size: Point(1080, 2400), rotation: ROTATION_0
+D/BLASTBufferQueue(17897): [VRI[MainActivity,type=1]#2](f:0,a:5) destructor()
+D/BufferQueueConsumer(17897): [VRI[MainActivity,type=1]#2(BLAST Consumer)2](id:45e900000002,api:0,p:-1,c:17897) disconnect
+I/HWUI    (17897): [setStopped] CanvasContext will be destroyed.
+Lost connection to device.
