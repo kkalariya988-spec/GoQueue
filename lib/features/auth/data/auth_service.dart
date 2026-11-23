@@ -6,12 +6,12 @@ class AuthUser {
   const AuthUser({
     required this.name,
     required this.email,
-    this.role = 'customer',
+    required this.role,
   });
 
   final String name;
   final String email;
-  final String role;
+  final String role; // 'admin', 'manager', 'customer'
 }
 
 class AuthService {
@@ -19,39 +19,76 @@ class AuthService {
 
   static final AuthService instance = AuthService._();
 
-  // Demo credentials for local testing.
-  static const String demoName = 'Khushi Kalariya';
-  static const String demoEmail = 'kkalariya988@rku.ac.in';
-  static const String demoPassword = '123456';
+  // Pre-configured testing accounts:
+  static const List<Map<String, String>> demoAccounts = [
+    {
+      'role': 'customer',
+      'name': 'Khushi Kalariya',
+      'email': 'khushi@goqueue.com',
+      'password': '123456',
+    },
+    {
+      'role': 'admin',
+      'name': 'Khushi Admin',
+      'email': 'kkalariya988@rku.ac.in',
+      'password': '123456',
+    },
+    {
+      'role': 'manager',
+      'name': 'Dharmi Lunagariya',
+      'email': 'dharmi@goqueue.com',
+      'password': '123456',
+    },
+    {
+      'role': 'customer',
+      'name': 'Kumkum Gadhiya',
+      'email': 'kumkum@goqueue.com',
+      'password': '123456',
+    },
+  ];
+
+  static String get demoName => demoAccounts.first['name']!;
+  static String get demoEmail => demoAccounts.first['email']!;
+  static String get demoPassword => demoAccounts.first['password']!;
 
   AuthUser? _currentUser;
 
   AuthUser? get currentUser => _currentUser;
 
-  /// Returns the signed-in user, or `null` when the credentials do not match
-  /// the demo account.
+  /// Returns the signed-in user, or `null` when credentials do not match.
+  /// If [name] is empty or not matched, it authenticates by [email] & [password].
   Future<AuthUser?> login({
-    required String name,
+    String? name,
     required String email,
     required String password,
-    Duration delay = const Duration(milliseconds: 450),
+    Duration delay = const Duration(milliseconds: 300),
   }) async {
     if (delay > Duration.zero) {
       await Future<void>.delayed(delay);
     }
 
-    final matches =
-        name.trim().toLowerCase() == demoName.toLowerCase() &&
-        email.trim().toLowerCase() == demoEmail.toLowerCase() &&
-        password == demoPassword;
+    final trimmedEmail = email.trim().toLowerCase();
+    final trimmedPass = password.trim();
 
-    if (!matches) {
-      return null;
+    for (final acc in demoAccounts) {
+      final accEmail = acc['email']!.toLowerCase();
+      final accPass = acc['password']!;
+
+      if (trimmedEmail == accEmail && trimmedPass == accPass) {
+        final resolvedName = (name != null && name.trim().isNotEmpty)
+            ? name.trim()
+            : acc['name']!;
+        final user = AuthUser(
+          name: resolvedName,
+          email: acc['email']!,
+          role: acc['role']!,
+        );
+        _currentUser = user;
+        return user;
+      }
     }
 
-    final user = AuthUser(name: demoName, email: demoEmail);
-    _currentUser = user;
-    return user;
+    return null;
   }
 
   void logout() {

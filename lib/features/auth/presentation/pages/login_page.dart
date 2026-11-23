@@ -62,13 +62,25 @@ class _LoginPageState extends State<LoginPage> {
     if (user == null) {
       setState(() {
         _isSubmitting = false;
-        _errorMessage = 'Incorrect name, email or password.';
+        _errorMessage = 'Incorrect email or password.';
       });
       return;
     }
 
     setState(() => _isSubmitting = false);
-    NavigationService.pushReplacementNamed(RouteNames.userHome);
+
+    switch (user.role) {
+      case 'admin':
+        NavigationService.pushReplacementNamed(RouteNames.adminDashboard);
+        break;
+      case 'manager':
+        NavigationService.pushReplacementNamed(RouteNames.managerDashboard);
+        break;
+      case 'customer':
+      default:
+        NavigationService.pushReplacementNamed(RouteNames.userHome);
+        break;
+    }
   }
 
   @override

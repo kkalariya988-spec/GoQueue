@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/router/route_names.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../../../core/utils/formatters.dart';
@@ -31,6 +32,86 @@ class _ServicesListPageState extends State<ServicesListPage> {
 
   String _selected = 'All';
 
+  void _showServiceDescriptionDialog(PopularService service) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+        title: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.softPink,
+                borderRadius: AppRadius.borderMd,
+              ),
+              child: Icon(
+                serviceIcon(service.name),
+                color: AppColors.primary,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    service.name,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '${service.durationMin} mins • Starting from ${formatInr(service.startingPrice)}',
+                    style: const TextStyle(fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              service.tagline,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'About this Service',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Enjoy premium professional ${service.name.toLowerCase()} care delivered by top verified stylists. Customized to your hair type, preferences, and personal style.',
+              style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary, height: 1.4),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Close'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(ctx);
+              Navigator.pushNamed(context, RouteNames.userSalons);
+            },
+            child: const Text('Find Salons'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final services = _selected == 'All'
@@ -59,7 +140,11 @@ class _ServicesListPageState extends State<ServicesListPage> {
                   title: _selected == 'All' ? 'All Services' : _selected,
                 ),
                 const SizedBox(height: 12),
-                for (final service in services) _ServiceRow(service: service),
+                for (final service in services)
+                  _ServiceRow(
+                    service: service,
+                    onTap: () => _showServiceDescriptionDialog(service),
+                  ),
                 const SizedBox(height: 12),
               ],
             );
@@ -158,9 +243,10 @@ class _CategoryChip extends StatelessWidget {
 }
 
 class _ServiceRow extends StatelessWidget {
-  const _ServiceRow({required this.service});
+  const _ServiceRow({required this.service, this.onTap});
 
   final PopularService service;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -177,14 +263,7 @@ class _ServiceRow extends StatelessWidget {
         ),
         child: InkWell(
           excludeFromSemantics: true,
-          onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Service detail coming next.'),
-              behavior: SnackBarBehavior.floating,
-              backgroundColor: AppColors.textPrimary,
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
-            ),
-          ),
+          onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(

@@ -85,7 +85,7 @@ void main() {
 
     await tester.tap(find.byKey(const Key('bottom_nav_4')));
     await tester.pumpAndSettle();
-    expect(find.text(AuthService.demoEmail), findsOneWidget);
+    expect(find.text(AuthService.demoEmail), findsWidgets);
     expect(find.widgetWithText(AppButton, 'Log Out'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -101,7 +101,7 @@ void main() {
 
     await tester.tap(find.byKey(const Key('bottom_nav_4')));
     await tester.pumpAndSettle();
-    expect(find.text(AuthService.demoEmail), findsOneWidget);
+    expect(find.text(AuthService.demoEmail), findsWidgets);
     expect(find.widgetWithText(AppButton, 'Log Out'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

@@ -12,7 +12,7 @@ class OffersPage extends StatelessWidget {
     _OfferModel(
       code: 'SAVE20',
       title: '20% Off Your Next Grooming',
-      description: 'Valid on hair styling, beard grooming, and facial packages above \$30.',
+      description: 'Valid on hair styling, beard grooming, and facial packages above ₹399.',
       discountText: '20% OFF',
       expiryText: 'Expires in 4 days',
       badgeColor: AppColors.primary,

@@ -317,7 +317,7 @@ class _PriceBreakdown extends StatelessWidget {
   }
 
   String _formatPrice(double price) {
-    return 'Rs ${price.toStringAsFixed(0)}';
+    return '₹${price.toStringAsFixed(0)}';
   }
 }
 

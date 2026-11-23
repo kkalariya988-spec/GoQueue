@@ -7,6 +7,7 @@ import '../../../../core/services/navigation_service.dart';
 import '../../../auth/data/auth_service.dart';
 import '../../data/manager_repository.dart';
 import '../../data/models/manager_models.dart';
+import 'manager_profile_page.dart';
 
 class ManagerDashboardPage extends StatefulWidget {
   const ManagerDashboardPage({super.key});
@@ -16,7 +17,7 @@ class ManagerDashboardPage extends StatefulWidget {
 }
 
 class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
-  int _currentTab = 0; // 0: Live Queue, 1: Staff, 2: Services, 3: Analytics
+  int _currentTab = 0; // 0: Live Queue, 1: Staff, 2: Services, 3: Analytics, 4: Profile
 
   final _repo = ManagerRepository.instance;
 
@@ -25,6 +26,344 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
     NavigationService.pushNamedAndRemoveUntil(
       RouteNames.login,
       (route) => false,
+    );
+  }
+
+  void _showTicketDetailsDialog(QueueTicket ticket) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppColors.softPink,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                ticket.ticketNumber,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    ticket.customerName,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    ticket.isWalkIn ? 'Walk-in Client' : 'Online Booking',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: ticket.isWalkIn ? Colors.blue : Colors.green,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _dialogDetailRow('Current Status', ticket.status.name.toUpperCase()),
+            _dialogDetailRow('Selected Service', ticket.serviceName),
+            _dialogDetailRow('Assigned Stylist', ticket.stylistName),
+            _dialogDetailRow('Estimated Wait', '~${ticket.estimatedWaitMinutes} minutes'),
+            const SizedBox(height: 12),
+            const Text(
+              'Queue Note & Instructions',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              ticket.status == QueueStatus.inService
+                  ? 'Customer is currently in chair receiving service from ${ticket.stylistName}.'
+                  : (ticket.status == QueueStatus.waiting
+                      ? 'Customer is in the waiting lounge. Click "Call to Chair" when stylist seat is sanitized and ready.'
+                      : 'Service successfully finished and payment processed.'),
+              style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Close'),
+          ),
+          if (ticket.status == QueueStatus.waiting) ...[
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _repo.updateTicketStatus(ticket.id, QueueStatus.noShow);
+                });
+                Navigator.pop(ctx);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${ticket.customerName} marked as No-show.')),
+                );
+              },
+              child: const Text('Mark No-show', style: TextStyle(color: Colors.red)),
+            ),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  _repo.updateTicketStatus(ticket.id, QueueStatus.inService);
+                });
+                Navigator.pop(ctx);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${ticket.customerName} called to chair!')),
+                );
+              },
+              icon: const Icon(Icons.chair_rounded, size: 16),
+              label: const Text('Call to Chair'),
+            ),
+          ] else if (ticket.status == QueueStatus.inService) ...[
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  _repo.updateTicketStatus(ticket.id, QueueStatus.completed);
+                });
+                Navigator.pop(ctx);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${ticket.customerName} marked as completed!')),
+                );
+              },
+              icon: const Icon(Icons.check_rounded, size: 16),
+              label: const Text('Mark Done'),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  void _showStaffDetailsDialog(ManagerStaffMember staff) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: AppColors.softPink,
+              child: Text(
+                staff.name[0],
+                style: const TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    staff.name,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    staff.role,
+                    style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _dialogDetailRow('Staff ID', staff.id),
+            _dialogDetailRow('Specialty / Role', staff.role),
+            _dialogDetailRow('Active Status', staff.isActive ? 'Active on floor' : 'Off-duty'),
+            _dialogDetailRow('Break Status', staff.isOnBreak ? 'On Break' : 'Available'),
+            const SizedBox(height: 12),
+            const Text(
+              'Stylist Overview',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'Certified stylist eligible for assignment in online appointments and walk-in queue management.',
+              style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Close'),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              setState(() {
+                _repo.toggleStaffStatus(
+                  staff.id,
+                  isActive: staff.isActive,
+                  isOnBreak: !staff.isOnBreak,
+                );
+              });
+              Navigator.pop(ctx);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    staff.isOnBreak ? '${staff.name} is back from break.' : '${staff.name} is now on break.',
+                  ),
+                ),
+              );
+            },
+            child: Text(staff.isOnBreak ? 'End Break' : 'Send on Break'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: staff.isActive ? Colors.red : Colors.green,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                _repo.toggleStaffStatus(staff.id, isActive: !staff.isActive);
+              });
+              Navigator.pop(ctx);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    staff.isActive ? '${staff.name} set to Off-duty.' : '${staff.name} marked Active on floor.',
+                  ),
+                ),
+              );
+            },
+            child: Text(staff.isActive ? 'Clock Out' : 'Clock In / Active'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showServiceDetailsDialog(ManagerServiceItem service) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: AppColors.softPink,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.spa_rounded, color: AppColors.primary),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    service.title,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '₹${service.price.toStringAsFixed(0)} • ${service.durationMinutes} mins',
+                    style: const TextStyle(fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _dialogDetailRow('Service ID', service.id),
+            _dialogDetailRow('Duration', '${service.durationMinutes} minutes'),
+            _dialogDetailRow('Price', '₹${service.price.toStringAsFixed(2)}'),
+            _dialogDetailRow('Catalog Visibility', service.isEnabled ? 'Available for booking' : 'Disabled'),
+            const SizedBox(height: 12),
+            const Text(
+              'Service Description',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Offered at Luxe Cut Studio. Includes consultation, specialized treatment, styling, and finishing touches.',
+              style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Close'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: service.isEnabled ? Colors.orange : AppColors.primary,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                _repo.toggleServiceStatus(service.id, !service.isEnabled);
+              });
+              Navigator.pop(ctx);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    service.isEnabled ? '${service.title} disabled from catalog.' : '${service.title} enabled for booking!',
+                  ),
+                ),
+              );
+            },
+            child: Text(service.isEnabled ? 'Disable Service' : 'Enable Service'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget _dialogDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -229,6 +568,7 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
                 _buildStaffView(),
                 _buildServicesView(),
                 _buildAnalyticsView(completed),
+                const ManagerProfilePage(),
               ],
             ),
           ),
@@ -267,6 +607,11 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
             selectedIcon: Icon(Icons.insights_rounded),
             label: 'Today Stats',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline_rounded),
+            selectedIcon: Icon(Icons.person_rounded),
+            label: 'Profile',
+          ),
         ],
       ),
     );
@@ -290,6 +635,7 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
           const _EmptyStateBox(text: 'No customer currently in service.'),
         ...inService.map((ticket) => _TicketCard(
               ticket: ticket,
+              onTap: () => _showTicketDetailsDialog(ticket),
               onComplete: () {
                 setState(() {
                   _repo.updateTicketStatus(ticket.id, QueueStatus.completed);
@@ -308,6 +654,7 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
           const _EmptyStateBox(text: 'Queue is clear! No customers waiting.'),
         ...waiting.map((ticket) => _TicketCard(
               ticket: ticket,
+              onTap: () => _showTicketDetailsDialog(ticket),
               onCallNext: () {
                 setState(() {
                   _repo.updateTicketStatus(ticket.id, QueueStatus.inService);
@@ -327,7 +674,10 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
           color: Colors.green,
         ),
         const SizedBox(height: 8),
-        ...completed.map((ticket) => _TicketCard(ticket: ticket)),
+        ...completed.map((ticket) => _TicketCard(
+              ticket: ticket,
+              onTap: () => _showTicketDetailsDialog(ticket),
+            )),
       ],
     );
   }
@@ -348,56 +698,66 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
         ..._repo.staff.map(
           (st) => Container(
             margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: AppRadius.borderLg,
               border: Border.all(color: AppColors.border),
             ),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: AppColors.softPink,
-                  child: Text(
-                    st.name[0],
-                    style: const TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: Material(
+              color: Colors.transparent,
+              borderRadius: AppRadius.borderLg,
+              child: InkWell(
+                borderRadius: AppRadius.borderLg,
+                onTap: () => _showStaffDetailsDialog(st),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
                     children: [
-                      Text(
-                        st.name,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                      CircleAvatar(
+                        backgroundColor: AppColors.softPink,
+                        child: Text(
+                          st.name[0],
+                          style: const TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      Text(
-                        st.role,
-                        style: const TextStyle(
-                          fontSize: 12.5,
-                          color: AppColors.textSecondary,
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              st.name,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              st.role,
+                              style: const TextStyle(
+                                fontSize: 12.5,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      ChoiceChip(
+                        label: Text(st.isOnBreak ? 'On Break' : (st.isActive ? 'Active' : 'Off')),
+                        selected: st.isActive,
+                        onSelected: (val) {
+                          setState(() {
+                            _repo.toggleStaffStatus(st.id, isActive: val);
+                          });
+                        },
                       ),
                     ],
                   ),
                 ),
-                ChoiceChip(
-                  label: Text(st.isOnBreak ? 'On Break' : (st.isActive ? 'Active' : 'Off')),
-                  selected: st.isActive,
-                  onSelected: (val) {
-                    setState(() {
-                      _repo.toggleStaffStatus(st.id, isActive: val);
-                    });
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -434,45 +794,55 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
         ..._repo.services.map(
           (srv) => Container(
             margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: AppRadius.borderLg,
               border: Border.all(color: AppColors.border),
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: Material(
+              color: Colors.transparent,
+              borderRadius: AppRadius.borderLg,
+              child: InkWell(
+                borderRadius: AppRadius.borderLg,
+                onTap: () => _showServiceDetailsDialog(srv),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
                     children: [
-                      Text(
-                        srv.title,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              srv.title,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '${srv.durationMinutes} mins • ₹${srv.price.toStringAsFixed(0)}',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Text(
-                        '${srv.durationMinutes} mins • \$${srv.price.toStringAsFixed(0)}',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: AppColors.textSecondary,
-                        ),
+                      Switch.adaptive(
+                        value: srv.isEnabled,
+                        activeTrackColor: AppColors.primary,
+                        onChanged: (val) {
+                          setState(() {
+                            _repo.toggleServiceStatus(srv.id, val);
+                          });
+                        },
                       ),
                     ],
                   ),
                 ),
-                Switch.adaptive(
-                  value: srv.isEnabled,
-                  activeTrackColor: AppColors.primary,
-                  onChanged: (val) {
-                    setState(() {
-                      _repo.toggleServiceStatus(srv.id, val);
-                    });
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -504,7 +874,7 @@ class _ManagerDashboardPageState extends State<ManagerDashboardPage> {
             children: [
               _StatItem(
                 label: 'Total Revenue Today',
-                value: '\$${(completed.length * 48 + 35).toStringAsFixed(0)}',
+                value: '₹${(completed.length * 480 + 350).toStringAsFixed(0)}',
                 color: Colors.green,
               ),
               const Divider(height: 24, color: AppColors.divider),
@@ -632,12 +1002,14 @@ class _EmptyStateBox extends StatelessWidget {
 class _TicketCard extends StatelessWidget {
   const _TicketCard({
     required this.ticket,
+    this.onTap,
     this.onCallNext,
     this.onComplete,
     this.onNoShow,
   });
 
   final QueueTicket ticket;
+  final VoidCallback? onTap;
   final VoidCallback? onCallNext;
   final VoidCallback? onComplete;
   final VoidCallback? onNoShow;
@@ -646,7 +1018,6 @@ class _TicketCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppRadius.borderLg,
@@ -657,117 +1028,128 @@ class _TicketCard extends StatelessWidget {
           width: ticket.status == QueueStatus.inService ? 1.5 : 1,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.softPink,
-                      borderRadius: BorderRadius.circular(6),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: AppRadius.borderLg,
+        child: InkWell(
+          borderRadius: AppRadius.borderLg,
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.softPink,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            ticket.ticketNumber,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          ticket.customerName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        if (ticket.isWalkIn) ...[
+                          const SizedBox(width: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: const Text(
+                              'Walk-in',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
-                    child: Text(
-                      ticket.ticketNumber,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    ticket.customerName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                  if (ticket.isWalkIn) ...[
-                    const SizedBox(width: 6),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Colors.blue.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: const Text(
-                        'Walk-in',
-                        style: TextStyle(
-                          fontSize: 10,
+                    if (ticket.status == QueueStatus.waiting)
+                      Text(
+                        '~${ticket.estimatedWaitMinutes}m wait',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
                           fontWeight: FontWeight.w600,
-                          color: Colors.blue,
                         ),
                       ),
-                    ),
                   ],
-                ],
-              ),
-              if (ticket.status == QueueStatus.waiting)
+                ),
+                const SizedBox(height: 8),
                 Text(
-                  '~${ticket.estimatedWaitMinutes}m wait',
+                  '${ticket.serviceName} • Stylist: ${ticket.stylistName}',
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 13,
                     color: AppColors.textSecondary,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '${ticket.serviceName} • Stylist: ${ticket.stylistName}',
-            style: const TextStyle(
-              fontSize: 13,
-              color: AppColors.textSecondary,
-            ),
-          ),
-          if (onCallNext != null || onComplete != null) ...[
-            const SizedBox(height: 12),
-            const Divider(height: 1, color: AppColors.divider),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                if (onNoShow != null)
-                  TextButton(
-                    onPressed: onNoShow,
-                    child: const Text(
-                      'No-show',
-                      style: TextStyle(color: Colors.red, fontSize: 13),
-                    ),
+                if (onCallNext != null || onComplete != null) ...[
+                  const SizedBox(height: 12),
+                  const Divider(height: 1, color: AppColors.divider),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (onNoShow != null)
+                        TextButton(
+                          onPressed: onNoShow,
+                          child: const Text(
+                            'No-show',
+                            style: TextStyle(color: Colors.red, fontSize: 13),
+                          ),
+                        ),
+                      if (onCallNext != null)
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+                          ),
+                          onPressed: onCallNext,
+                          icon: const Icon(Icons.chair_rounded, size: 16),
+                          label: const Text('Call to Chair'),
+                        ),
+                      if (onComplete != null)
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+                          ),
+                          onPressed: onComplete,
+                          icon: const Icon(Icons.check_rounded, size: 16),
+                          label: const Text('Mark Done'),
+                        ),
+                    ],
                   ),
-                if (onCallNext != null)
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
-                    ),
-                    onPressed: onCallNext,
-                    icon: const Icon(Icons.chair_rounded, size: 16),
-                    label: const Text('Call to Chair'),
-                  ),
-                if (onComplete != null)
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
-                    ),
-                    onPressed: onComplete,
-                    icon: const Icon(Icons.check_rounded, size: 16),
-                    label: const Text('Mark Done'),
-                  ),
+                ],
               ],
             ),
-          ],
-        ],
+          ),
+        ),
       ),
     );
   }

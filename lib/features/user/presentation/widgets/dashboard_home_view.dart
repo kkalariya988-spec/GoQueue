@@ -38,6 +38,81 @@ class DashboardHomeView extends StatelessWidget {
   final VoidCallback onBrowseServices;
   final VoidCallback onLiveQueue;
 
+  void _showHomeServiceDialog(BuildContext context, PopularService service) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+        title: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: AppColors.softPink,
+                borderRadius: AppRadius.borderMd,
+              ),
+              child: Icon(
+                serviceIcon(service.name),
+                color: AppColors.primary,
+                size: 22,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    service.name,
+                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Starting from \u{20B9}${service.startingPrice}',
+                    style: const TextStyle(fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              service.tagline,
+              style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Professional ${service.name.toLowerCase()} tailored to your style by verified partner salons near you.',
+              style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary, height: 1.35),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Close'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(ctx);
+              onBrowseSalons();
+            },
+            child: const Text('Explore Salons'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -67,7 +142,7 @@ class DashboardHomeView extends StatelessWidget {
                 children: [
                   _PopularServicesSection(
                     onViewAll: onBrowseServices,
-                    onServiceTap: (_) => onBrowseServices(),
+                    onServiceTap: (service) => _showHomeServiceDialog(context, service),
                   ),
                   const SizedBox(height: 28),
                   _TopSalonsSection(

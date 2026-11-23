@@ -116,7 +116,7 @@ class _PaymentPageState extends State<PaymentPage> {
             const SizedBox(height: AppSpacing.md),
             _SummaryRow(
               label: 'Total',
-              value: 'Rs ${widget.total.toInt()}',
+              value: '₹${widget.total.toInt()}',
               isAmount: true,
             ),
             const SizedBox(height: AppSpacing.lg),

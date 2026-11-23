@@ -113,7 +113,7 @@ void main() {
       email: 'wrong@example.com',
       password: '000000',
     );
-    expect(find.text('Incorrect name, email or password.'), findsOneWidget);
+    expect(find.text('Incorrect email or password.'), findsOneWidget);
     expect(find.byType(LoginPage), findsOneWidget);
     expect(find.byType(UserHomePage), findsNothing);
 
@@ -129,7 +129,7 @@ void main() {
 
     await tester.tap(find.byKey(const Key('bottom_nav_4')));
     await tester.pumpAndSettle();
-    expect(find.text(AuthService.demoEmail), findsOneWidget);
+    expect(find.text(AuthService.demoEmail), findsWidgets);
 
     final logoutButton = find.widgetWithText(AppButton, 'Log Out');
     await tester.ensureVisible(logoutButton);

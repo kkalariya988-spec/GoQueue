@@ -29,9 +29,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
   void initState() {
     super.initState();
     final user = AuthService.instance.currentUser;
-    _nameController = TextEditingController(text: user?.name ?? 'Alex Turner');
+    _nameController = TextEditingController(text: user?.name ?? 'Kumkum Gadhiya');
     _emailController = TextEditingController(
-      text: user?.email ?? 'alex.turner@example.com',
+      text: user?.email ?? 'kumkum@goqueue.com',
     );
     _phoneController = TextEditingController(text: '+1 (555) 234-5678');
   }
@@ -350,33 +350,38 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: AppRadius.borderLg,
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+    return Material(
+      color: Colors.white,
+      borderRadius: AppRadius.borderLg,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: AppRadius.borderLg,
+          border: Border.all(color: AppColors.border),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
                 ),
-              ),
-              ?trailing,
-            ],
-          ),
-          const SizedBox(height: 16),
-          ...children,
-        ],
+                ?trailing,
+              ],
+            ),
+            const SizedBox(height: 16),
+            ...children,
+          ],
+        ),
       ),
     );
   }
